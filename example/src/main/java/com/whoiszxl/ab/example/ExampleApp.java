@@ -13,7 +13,9 @@ public class ExampleApp extends Application{
     @Override
     public void onCreate() {
         super.onCreate();
-        Ab.init(this).configure();
+        Ab.init(this)
+                .withApiHost("http://127.0.0.1")
+                .configure();
 
     }
 }

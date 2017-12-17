@@ -3,6 +3,7 @@ package com.whoiszxl.ab.example;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.Toast;
 
 import com.whoiszxl.ab.delegates.AbDelegate;
 import com.whoiszxl.ab.net.RestClient;
@@ -24,17 +25,16 @@ public class ExampleDelegate extends AbDelegate {
 
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
-
+        testRestClient();
     }
 
     public void testRestClient(){
         RestClient.builder()
-                .url("")
-                .params("","")
+                .url("http://news.baidu.com/")
                 .success(new ISuccess() {
                     @Override
                     public void onSuccess(String response) {
-
+                        Toast.makeText(getContext(), response, Toast.LENGTH_LONG).show();
                     }
                 })
                 .failure(new IFailure() {
@@ -49,6 +49,7 @@ public class ExampleDelegate extends AbDelegate {
 
                     }
                 })
-                .build();
+                .build()
+                .get();
     }
 }
