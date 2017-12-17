@@ -15,8 +15,10 @@ public final class Ab {
         return Configurator.getInstance();
     }
 
-    private static WeakHashMap<String, Object> getConfiguration() {
+    public static WeakHashMap<String, Object> getConfiguration() {
         return Configurator.getInstance().getAbConfigs();
     }
+
+
 
 }
