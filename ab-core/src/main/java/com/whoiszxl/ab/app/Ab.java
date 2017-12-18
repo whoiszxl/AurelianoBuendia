@@ -19,6 +19,10 @@ public final class Ab {
         return Configurator.getInstance().getAbConfigs();
     }
 
+    public static Context getApplicationContext() {
+        return (Context) getConfiguration().get(ConfigType.APPLICATION_CONTEXT.name());
+    }
+
 
 
 }

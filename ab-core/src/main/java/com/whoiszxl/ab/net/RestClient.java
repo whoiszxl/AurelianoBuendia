@@ -1,5 +1,6 @@
 package com.whoiszxl.ab.net;
 
+import android.content.Context;
 import android.widget.Switch;
 
 import com.whoiszxl.ab.net.callback.IError;
@@ -7,6 +8,8 @@ import com.whoiszxl.ab.net.callback.IFailure;
 import com.whoiszxl.ab.net.callback.IRequest;
 import com.whoiszxl.ab.net.callback.ISuccess;
 import com.whoiszxl.ab.net.callback.RequestCallbacks;
+import com.whoiszxl.ab.ui.AbLoader;
+import com.whoiszxl.ab.ui.LoaderStyle;
 
 import java.util.Map;
 import java.util.WeakHashMap;
@@ -28,6 +31,9 @@ public class RestClient {
     private final IFailure FAILURE;
     private final IError ERROR;
     private final RequestBody BODY;
+    private final LoaderStyle LOADER_STYLE;
+    private final Context CONTEXT;
+
 
     public RestClient(String url,
                       Map<String, Object> params,
@@ -35,7 +41,9 @@ public class RestClient {
                       ISuccess success,
                       IFailure failure,
                       IError error,
-                      RequestBody body) {
+                      RequestBody body,
+                      Context context,
+                      LoaderStyle loaderStyle) {
         this.URL = url;
         this.PARAMS.putAll(params);
         this.REQUEST = request;
@@ -43,6 +51,8 @@ public class RestClient {
         this.FAILURE = failure;
         this.ERROR = error;
         this.BODY = body;
+        this.CONTEXT = context;
+        this.LOADER_STYLE = loaderStyle;
     }
 
     public static RestClientBuilder builder(){
@@ -55,6 +65,10 @@ public class RestClient {
 
         if(REQUEST != null){
             REQUEST.onRequestStart();
+        }
+
+        if(LOADER_STYLE != null){
+            AbLoader.showLoading(CONTEXT,LOADER_STYLE);
         }
 
         switch (method){
@@ -84,7 +98,8 @@ public class RestClient {
                 REQUEST,
                 SUCCESS,
                 FAILURE,
-                ERROR
+                ERROR,
+                LOADER_STYLE
         );
     }
 
