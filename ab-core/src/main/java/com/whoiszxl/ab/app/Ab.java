@@ -1,6 +1,7 @@
 package com.whoiszxl.ab.app;
 
 import android.content.Context;
+import android.os.Handler;
 
 import java.util.WeakHashMap;
 
@@ -11,8 +12,17 @@ import java.util.WeakHashMap;
 public final class Ab {
 
     public static Configurator init(Context context) {
-        getConfiguration().put(ConfigType.APPLICATION_CONTEXT.name(), context.getApplicationContext());
+        Configurator.getInstance()
+                .getAbConfigs()
+                .put(ConfigKeys.APPLICATION_CONTEXT,context.getApplicationContext());
         return Configurator.getInstance();
+    }
+
+    public static Configurator getConfigurator() {
+        return Configurator.getInstance();
+    }
+    public static <T> T getConfiguration(Object key) {
+        return getConfigurator().getConfiguration(key);
     }
 
     public static WeakHashMap<String, Object> getConfiguration() {
@@ -20,7 +30,11 @@ public final class Ab {
     }
 
     public static Context getApplicationContext() {
-        return (Context) getConfiguration().get(ConfigType.APPLICATION_CONTEXT.name());
+        return (Context) getConfiguration().get(ConfigKeys.APPLICATION_CONTEXT);
+    }
+
+    public static Handler getHandler() {
+        return getConfiguration(ConfigKeys.HANDLER);
     }
 
 

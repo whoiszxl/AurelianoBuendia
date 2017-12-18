@@ -31,7 +31,7 @@ public class ExampleDelegate extends AbDelegate {
 
     public void testRestClient(){
         RestClient.builder()
-                .url("http://news.baidu.com/")
+                .url("http://127.0.0.1/index")
                 .loader(getContext(), LoaderStyle.BallZigZagIndicator)
                 .success(new ISuccess() {
                     @Override

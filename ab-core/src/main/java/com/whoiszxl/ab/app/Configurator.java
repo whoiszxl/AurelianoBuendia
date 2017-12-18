@@ -1,6 +1,12 @@
 package com.whoiszxl.ab.app;
 
+import com.joanzapata.iconify.IconFontDescriptor;
+import com.joanzapata.iconify.Iconify;
+
+import java.util.ArrayList;
 import java.util.WeakHashMap;
+
+import okhttp3.Interceptor;
 
 /**
  * Created by zxlvoid on 2017/12/17 0017.
@@ -12,18 +18,22 @@ public class Configurator {
     /**
      * weakHashMap在键值对未使用的时候就会进行回收,很及时,极大限度避免内存爆满
      */
-    private static final WeakHashMap<String, Object> AB_CONFIGS = new WeakHashMap<>();
+    private static final WeakHashMap<Object, Object> AB_CONFIGS = new WeakHashMap<>();
+
+    private static final ArrayList<IconFontDescriptor> ICONS = new ArrayList<>();
+
+    private static final ArrayList<Interceptor> INTERCEPTORS = new ArrayList<>();
 
     private Configurator() {
-        AB_CONFIGS.put(ConfigType.CONFIG_READY.name(), false);
-    }
-
-    public final WeakHashMap getAbConfigs() {
-        return AB_CONFIGS;
+        AB_CONFIGS.put(ConfigKeys.CONFIG_READY.name(), false);
     }
 
     public static Configurator getInstance() {
         return Holder.INSTANCE;
+    }
+
+    public final WeakHashMap getAbConfigs() {
+        return AB_CONFIGS;
     }
 
     /**
@@ -34,24 +44,60 @@ public class Configurator {
     }
 
     public final void configure() {
-        AB_CONFIGS.put(ConfigType.CONFIG_READY.name(), true);
+        AB_CONFIGS.put(ConfigKeys.CONFIG_READY.name(), true);
     }
 
     public final Configurator withApiHost(String host) {
-        AB_CONFIGS.put(ConfigType.API_HOST.name(), host);
+        AB_CONFIGS.put(ConfigKeys.API_HOST.name(), host);
+        return this;
+    }
+
+    public final Configurator withLoaderDelayed(long delayed) {
+        AB_CONFIGS.put(ConfigKeys.LOADER_DELAYED, delayed);
+        return this;
+    }
+
+    private void initIcons() {
+        if (ICONS.size() > 0) {
+            final Iconify.IconifyInitializer initializer = Iconify.with(ICONS.get(0));
+            for (int i = 1; i < ICONS.size(); i++) {
+                initializer.with(ICONS.get(i));
+            }
+        }
+    }
+
+    public final Configurator withIcon(IconFontDescriptor descriptor) {
+        ICONS.add(descriptor);
+        return this;
+    }
+
+    public final Configurator withInterceptor(Interceptor interceptor) {
+        INTERCEPTORS.add(interceptor);
+        AB_CONFIGS.put(ConfigKeys.INTERCEPTOR, INTERCEPTORS);
+        return this;
+    }
+
+    public final Configurator withInterceptors(ArrayList<Interceptor> interceptors) {
+        INTERCEPTORS.addAll(interceptors);
+        AB_CONFIGS.put(ConfigKeys.INTERCEPTOR, INTERCEPTORS);
         return this;
     }
 
     private void checkConfiguration() {
-        final boolean isReady = (boolean) AB_CONFIGS.get(ConfigType.CONFIG_READY.name());
+        final boolean isReady = (boolean) AB_CONFIGS.get(ConfigKeys.CONFIG_READY.name());
         if (!isReady) {
             throw new RuntimeException("config not ready....");
         }
     }
 
     @SuppressWarnings("unchecked")
-    final <T> T getConfiguration(Enum<ConfigType> key) {
-        checkConfiguration();
-        return (T) AB_CONFIGS.get(key.name());
+    final <T> T getConfiguration(Object key) {
+        checkConfiguration();//检查是否加载完毕
+        final Object value = AB_CONFIGS.get(key);//通过key获取到配置中的object对象
+        if (value == null) {
+            throw new NullPointerException(key.toString() + " IS NULL");
+        }
+        //直接返回get到的value
+        return (T) AB_CONFIGS.get(key);
     }
 }
