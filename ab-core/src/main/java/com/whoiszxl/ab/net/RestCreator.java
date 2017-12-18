@@ -32,7 +32,7 @@ public class RestCreator {
 
     private static final class RetrofitHolder {
         //通过之前配置好的单例配置config类获取到api的host域名
-        private static final String BASE_URL = (String) Ab.getConfiguration().get(ConfigKeys.API_HOST.name());
+        private static final String BASE_URL = (String) Ab.getConfiguration(ConfigKeys.API_HOST);
         //通过retrofit构建一个client类
         private static final Retrofit RETROFIT_CLIENT = new Retrofit.Builder()
                 .baseUrl(BASE_URL)

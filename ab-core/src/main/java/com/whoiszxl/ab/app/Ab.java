@@ -25,12 +25,9 @@ public final class Ab {
         return getConfigurator().getConfiguration(key);
     }
 
-    public static WeakHashMap<String, Object> getConfiguration() {
-        return Configurator.getInstance().getAbConfigs();
-    }
 
     public static Context getApplicationContext() {
-        return (Context) getConfiguration().get(ConfigKeys.APPLICATION_CONTEXT);
+        return getConfiguration(ConfigKeys.APPLICATION_CONTEXT);
     }
 
     public static Handler getHandler() {
