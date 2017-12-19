@@ -10,7 +10,7 @@ import com.whoiszxl.ab.net.RestClient;
 import com.whoiszxl.ab.net.callback.IError;
 import com.whoiszxl.ab.net.callback.IFailure;
 import com.whoiszxl.ab.net.callback.ISuccess;
-import com.whoiszxl.ab.ui.LoaderStyle;
+import com.whoiszxl.ab.ui.loader.LoaderStyle;
 
 /**
  * Created by zxlvoid on 2017/12/17 0017.

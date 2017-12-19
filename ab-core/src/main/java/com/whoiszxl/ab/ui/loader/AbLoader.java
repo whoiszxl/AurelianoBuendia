@@ -1,4 +1,4 @@
-package com.whoiszxl.ab.ui;
+package com.whoiszxl.ab.ui.loader;
 
 import android.content.Context;
 import android.support.v7.app.AppCompatDialog;

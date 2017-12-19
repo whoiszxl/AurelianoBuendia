@@ -2,8 +2,8 @@ package com.whoiszxl.ab.net.callback;
 
 import android.os.Handler;
 
-import com.whoiszxl.ab.ui.AbLoader;
-import com.whoiszxl.ab.ui.LoaderStyle;
+import com.whoiszxl.ab.ui.loader.AbLoader;
+import com.whoiszxl.ab.ui.loader.LoaderStyle;
 
 import retrofit2.Call;
 import retrofit2.Callback;

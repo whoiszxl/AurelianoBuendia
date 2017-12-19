@@ -1,4 +1,4 @@
-package com.whoiszxl.ab.ui;
+package com.whoiszxl.ab.ui.loader;
 
 /**
  * Created by whoiszxl on 2017/12/18.

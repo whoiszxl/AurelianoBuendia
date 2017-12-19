@@ -9,6 +9,8 @@ import android.view.View;
 import com.whoiszxl.ab.delegates.AbDelegate;
 import com.whoiszxl.ab.ec.R;
 import com.whoiszxl.ab.ec.R2;
+import com.whoiszxl.ab.ui.launcher.ScrollLauncherTag;
+import com.whoiszxl.ab.util.storage.AbPreference;
 import com.whoiszxl.ab.util.timer.BaseTimerTask;
 import com.whoiszxl.ab.util.timer.ITimerListener;
 
@@ -32,7 +34,11 @@ public class LauncherDelegate extends AbDelegate implements ITimerListener{
 
     @OnClick(R2.id.tv_launcher_timer)
     void onClickTimerView(){
-
+        if(mTimer!=null){
+            mTimer.cancel();
+            mTimer = null;
+            checkIsShowScroll();
+        }
     }
 
     private void initTimer(){
@@ -48,9 +54,16 @@ public class LauncherDelegate extends AbDelegate implements ITimerListener{
 
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
-        Log.i("初始化开始","初始化开始");
         initTimer();
-        Log.i("初始化完成","初始化完成");
+    }
+
+    //判断是否显示滑动页面
+    private void checkIsShowScroll(){
+        if(!AbPreference.getAppFlag(ScrollLauncherTag.HAS_FIRST_LAUNCHER_APP.name())){
+            start(new LauncherScrollDelegate(),SINGLETASK);
+        }else{
+            //检查用户是否登录了APP
+        }
     }
 
     @Override
@@ -65,6 +78,7 @@ public class LauncherDelegate extends AbDelegate implements ITimerListener{
                         if(mTimer!=null){
                             mTimer.cancel();
                             mTimer = null;
+                            checkIsShowScroll();
                         }
                     }
                 }

@@ -1,7 +1,6 @@
 package com.whoiszxl.ab.net;
 
 import android.content.Context;
-import android.widget.Switch;
 
 import com.whoiszxl.ab.net.callback.IError;
 import com.whoiszxl.ab.net.callback.IFailure;
@@ -9,8 +8,8 @@ import com.whoiszxl.ab.net.callback.IRequest;
 import com.whoiszxl.ab.net.callback.ISuccess;
 import com.whoiszxl.ab.net.callback.RequestCallbacks;
 import com.whoiszxl.ab.net.download.DownloadHandler;
-import com.whoiszxl.ab.ui.AbLoader;
-import com.whoiszxl.ab.ui.LoaderStyle;
+import com.whoiszxl.ab.ui.loader.AbLoader;
+import com.whoiszxl.ab.ui.loader.LoaderStyle;
 
 import java.io.File;
 import java.util.Map;
