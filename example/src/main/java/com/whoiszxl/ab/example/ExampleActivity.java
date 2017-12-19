@@ -9,6 +9,7 @@ import com.whoiszxl.ab.activities.ProxyActivity;
 import com.whoiszxl.ab.delegates.AbDelegate;
 import com.whoiszxl.ab.ec.launcher.LauncherDelegate;
 import com.whoiszxl.ab.ec.launcher.LauncherScrollDelegate;
+import com.whoiszxl.ab.ec.sign.SignUpDelegate;
 
 public class ExampleActivity extends ProxyActivity {
 
@@ -23,6 +24,6 @@ public class ExampleActivity extends ProxyActivity {
 
     @Override
     public AbDelegate setRootDelegate() {
-        return new LauncherDelegate();
+        return new SignUpDelegate();
     }
 }
