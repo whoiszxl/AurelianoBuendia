@@ -3,6 +3,7 @@ package com.whoiszxl.ab.example;
 import android.app.Application;
 
 import com.whoiszxl.ab.app.Ab;
+import com.whoiszxl.ab.ec.database.DataBaseManager;
 import com.whoiszxl.ab.net.interceptors.DebugInterceptor;
 
 /**
@@ -19,6 +20,6 @@ public class ExampleApp extends Application{
                 .withApiHost("http://127.0.0.1")
                 .withInterceptor(new DebugInterceptor("index",R.raw.test))
                 .configure();
-
+        DataBaseManager.getInstance().init(this);
     }
 }
