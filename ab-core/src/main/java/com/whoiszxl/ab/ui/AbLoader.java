@@ -8,7 +8,7 @@ import android.view.WindowManager;
 
 import com.wang.avi.AVLoadingIndicatorView;
 import com.whoiszxl.ab.R;
-import com.whoiszxl.ab.util.DimenUtil;
+import com.whoiszxl.ab.util.dimen.DimenUtil;
 
 import java.util.ArrayList;
 

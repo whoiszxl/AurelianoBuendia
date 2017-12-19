@@ -1,4 +1,4 @@
-package com.whoiszxl.ab.util;
+package com.whoiszxl.ab.util.dimen;
 
 import android.content.res.Resources;
 import android.util.DisplayMetrics;
