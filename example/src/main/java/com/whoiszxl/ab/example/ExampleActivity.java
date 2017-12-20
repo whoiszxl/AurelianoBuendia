@@ -25,6 +25,6 @@ public class ExampleActivity extends ProxyActivity {
 
     @Override
     public AbDelegate setRootDelegate() {
-        return new SignInDelegate();
+        return new SignUpDelegate();
     }
 }

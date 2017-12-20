@@ -22,5 +22,12 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project(':ab-ec')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    testCompile 'junit:junit:4.12'
     annotationProcessor project(':ab-compiler')
+
+    compile 'com.facebook.stetho:stetho:1.5.0'
+    compile 'com.facebook.stetho:stetho-okhttp3:1.5.0'
 }

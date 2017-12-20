@@ -13,6 +13,7 @@ import com.whoiszxl.ab.ec.R;
 import com.whoiszxl.ab.ec.R2;
 import com.whoiszxl.ab.net.RestClient;
 import com.whoiszxl.ab.net.callback.ISuccess;
+import com.whoiszxl.ab.util.log.AbLogger;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -37,17 +38,24 @@ public class SignUpDelegate extends AbDelegate {
     @OnClick(R2.id.btn_sign_up)
     void onClickSignUp() {
         if (checkForm()) {
+            Toast.makeText(getContext(), "验证通过开始", Toast.LENGTH_SHORT).show();
             Log.i("用户注册逻辑验证通过了","");
-//            RestClient.builder()
-//                    .url("sign_up")
-//                    .params("","")
-//                    .success(new ISuccess() {
-//                        @Override
-//                        public void onSuccess(String response) {
-//
-//                        }
-//                    });
-            Toast.makeText(getContext(), "验证通过", Toast.LENGTH_LONG).show();
+            RestClient.builder()
+                    .url("http://android.whoiszxl.com/RestServer/api/user_profile.php")
+                    .params("name",mName.getText().toString())
+                    .params("email",mEmail.getText().toString())
+                    .params("phone",mPhone.getText().toString())
+                    .params("password",mPassword.getText().toString())
+                    .success(new ISuccess() {
+                        @Override
+                        public void onSuccess(String response) {
+                            AbLogger.json("USER_PROFILE",response);
+                            SignHandler.onSignUp(response);
+                        }
+                    })
+                    .build()
+                    .post();
+            Toast.makeText(getContext(), "验证通过结束", Toast.LENGTH_LONG).show();
         }
     }
 

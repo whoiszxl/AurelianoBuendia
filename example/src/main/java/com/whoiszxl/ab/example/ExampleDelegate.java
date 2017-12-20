@@ -31,7 +31,7 @@ public class ExampleDelegate extends AbDelegate {
 
     public void testRestClient(){
         RestClient.builder()
-                .url("http://127.0.0.1/index")
+                .url("http://android.whoiszxl.com/RestServer/api/user_profile.php")
                 .loader(getContext(), LoaderStyle.BallZigZagIndicator)
                 .success(new ISuccess() {
                     @Override
