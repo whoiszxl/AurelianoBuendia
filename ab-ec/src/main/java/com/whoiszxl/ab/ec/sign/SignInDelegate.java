@@ -1,14 +1,19 @@
 package com.whoiszxl.ab.ec.sign;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 
 import com.whoiszxl.ab.delegates.AbDelegate;
 import com.whoiszxl.ab.ec.R;
 import com.whoiszxl.ab.ec.R2;
+import com.whoiszxl.ab.net.RestClient;
+import com.whoiszxl.ab.net.callback.ISuccess;
+import com.whoiszxl.ab.util.log.AbLogger;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -25,20 +30,44 @@ public class SignInDelegate extends AbDelegate {
     @BindView(R2.id.edit_sign_in_password)
     TextInputEditText mPassword = null;
 
-    @OnClick(R2.id.btn_sign_in)
-    void OnClickSignIn(){
-        if(checkForm()){
+    private ISignListener mISignListener = null;
 
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (activity instanceof ISignListener) {
+            mISignListener = (ISignListener) activity;
+        }
+    }
+
+    @OnClick(R2.id.btn_sign_in)
+    void OnClickSignIn() {
+        if (checkForm()) {
+            //Toast.makeText(getContext(), "验证通过开始", Toast.LENGTH_SHORT).show();
+            Log.i("用户注册逻辑验证通过了", "");
+            RestClient.builder()
+                    .url("http://android.whoiszxl.com/RestServer/api/user_profile.php")
+                    .params("email", mEmail.getText().toString())
+                    .params("password", mPassword.getText().toString())
+                    .success(new ISuccess() {
+                        @Override
+                        public void onSuccess(String response) {
+                            AbLogger.json("USER_PROFILE", response);
+                            SignHandler.onSignIn(response, mISignListener);
+                        }
+                    })
+                    .build()
+                    .post();
         }
     }
 
     @OnClick(R2.id.icon_sign_in_wechat)
-    void OnClickWeChat(){
+    void OnClickWeChat() {
 
     }
 
     @OnClick(R2.id.tv_link_sign_up)
-    void onClickLink(){
+    void onClickLink() {
         start(new SignUpDelegate());
     }
 

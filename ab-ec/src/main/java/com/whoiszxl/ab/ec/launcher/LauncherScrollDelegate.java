@@ -1,14 +1,19 @@
 package com.whoiszxl.ab.ec.launcher;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.listener.OnItemClickListener;
+import com.whoiszxl.ab.app.AccountManager;
+import com.whoiszxl.ab.app.IUserChecker;
 import com.whoiszxl.ab.delegates.AbDelegate;
 import com.whoiszxl.ab.ec.R;
+import com.whoiszxl.ab.ui.launcher.ILauncherListener;
 import com.whoiszxl.ab.ui.launcher.LauncherHolderCreator;
+import com.whoiszxl.ab.ui.launcher.OnLauncherFinishTag;
 import com.whoiszxl.ab.ui.launcher.ScrollLauncherTag;
 import com.whoiszxl.ab.util.storage.AbPreference;
 
@@ -22,6 +27,7 @@ public class LauncherScrollDelegate extends AbDelegate implements OnItemClickLis
 
     private ConvenientBanner<Integer> mConvenientBanner = null;
     private static final ArrayList<Integer> INTEGERS = new ArrayList<>();
+    private ILauncherListener mILauncherListener = null;
 
     private void initBanner() {
         INTEGERS.add(R.mipmap.launcher_01);
@@ -36,6 +42,14 @@ public class LauncherScrollDelegate extends AbDelegate implements OnItemClickLis
                 .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.CENTER_HORIZONTAL)
                 .setOnItemClickListener(this)
                 .setCanLoop(false);
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if(activity instanceof ILauncherListener){
+            mILauncherListener = (ILauncherListener) activity;
+        }
     }
 
     @Override
@@ -55,6 +69,21 @@ public class LauncherScrollDelegate extends AbDelegate implements OnItemClickLis
         if(position == INTEGERS.size() - 1){
             AbPreference.setAppFlag(ScrollLauncherTag.HAS_FIRST_LAUNCHER_APP.name(),true);
             //check user is login
+            AccountManager.checkAccount(new IUserChecker() {
+                @Override
+                public void onSignIn() {
+                    if(mILauncherListener!=null){
+                        mILauncherListener.onLauncherFinish(OnLauncherFinishTag.SIGNED);
+                    }
+                }
+
+                @Override
+                public void onNotSignIn() {
+                    if(mILauncherListener!=null){
+                        mILauncherListener.onLauncherFinish(OnLauncherFinishTag.NOT_SIGNED);
+                    }
+                }
+            });
 
         }
     }

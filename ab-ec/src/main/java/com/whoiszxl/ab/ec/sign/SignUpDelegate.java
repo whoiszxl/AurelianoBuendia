@@ -1,5 +1,6 @@
 package com.whoiszxl.ab.ec.sign;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
@@ -35,10 +36,20 @@ public class SignUpDelegate extends AbDelegate {
     @BindView(R2.id.edit_sign_up_re_password)
     TextInputEditText mRePassword = null;
 
+    private ISignListener mISignListener = null;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if(activity instanceof ISignListener){
+            mISignListener = (ISignListener) activity;
+        }
+    }
+
     @OnClick(R2.id.btn_sign_up)
     void onClickSignUp() {
         if (checkForm()) {
-            Toast.makeText(getContext(), "验证通过开始", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getContext(), "验证通过开始", Toast.LENGTH_SHORT).show();
             Log.i("用户注册逻辑验证通过了","");
             RestClient.builder()
                     .url("http://android.whoiszxl.com/RestServer/api/user_profile.php")
@@ -50,12 +61,12 @@ public class SignUpDelegate extends AbDelegate {
                         @Override
                         public void onSuccess(String response) {
                             AbLogger.json("USER_PROFILE",response);
-                            SignHandler.onSignUp(response);
+                            SignHandler.onSignUp(response,mISignListener);
                         }
                     })
                     .build()
                     .post();
-            Toast.makeText(getContext(), "验证通过结束", Toast.LENGTH_LONG).show();
+            //Toast.makeText(getContext(), "验证通过结束", Toast.LENGTH_LONG).show();
         }
     }
 

@@ -26,7 +26,7 @@ public class ExampleDelegate extends AbDelegate {
 
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
-        testRestClient();
+        //testRestClient();
     }
 
     public void testRestClient(){
