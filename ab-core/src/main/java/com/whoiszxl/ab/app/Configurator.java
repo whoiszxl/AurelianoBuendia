@@ -45,6 +45,7 @@ public class Configurator {
     }
 
     public final void configure() {
+        initIcons();
         AB_CONFIGS.put(ConfigKeys.CONFIG_READY, true);
     }
 

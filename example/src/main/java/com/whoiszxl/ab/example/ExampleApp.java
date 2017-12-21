@@ -3,8 +3,10 @@ package com.whoiszxl.ab.example;
 import android.app.Application;
 
 import com.facebook.stetho.Stetho;
+import com.joanzapata.iconify.fonts.FontAwesomeModule;
 import com.whoiszxl.ab.app.Ab;
 import com.whoiszxl.ab.ec.database.DataBaseManager;
+import com.whoiszxl.ab.ec.icon.FontEcModule;
 import com.whoiszxl.ab.net.interceptors.DebugInterceptor;
 
 /**
@@ -17,6 +19,8 @@ public class ExampleApp extends Application{
     public void onCreate() {
         super.onCreate();
         Ab.init(this)
+                .withIcon(new FontAwesomeModule())
+                .withIcon(new FontEcModule())
                 .withLoaderDelayed(1000)
                 .withApiHost("http://127.0.0.1")
                 .withInterceptor(new DebugInterceptor("index",R.raw.test))
