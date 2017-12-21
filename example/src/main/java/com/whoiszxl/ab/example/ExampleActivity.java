@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.whoiszxl.ab.activities.ProxyActivity;
+import com.whoiszxl.ab.app.Ab;
 import com.whoiszxl.ab.delegates.AbDelegate;
 import com.whoiszxl.ab.ec.launcher.LauncherDelegate;
 import com.whoiszxl.ab.ec.launcher.LauncherScrollDelegate;
@@ -27,6 +28,7 @@ public class ExampleActivity extends ProxyActivity implements
         if(actionBar != null){
             actionBar.hide();
         }
+        Ab.getConfigurator().withActivity(this);
     }
 
     @Override

@@ -1,5 +1,7 @@
 package com.whoiszxl.ab.app;
 
+import android.app.Activity;
+
 import com.joanzapata.iconify.IconFontDescriptor;
 import com.joanzapata.iconify.Iconify;
 
@@ -84,6 +86,22 @@ public class Configurator {
         AB_CONFIGS.put(ConfigKeys.INTERCEPTOR, INTERCEPTORS);
         return this;
     }
+
+    public final Configurator withWeChatAppId(String appId) {
+        AB_CONFIGS.put(ConfigKeys.WE_CHAT_APP_ID,appId);
+        return this;
+    }
+
+    public final Configurator withWeChatAppSecret(String appSecret) {
+        AB_CONFIGS.put(ConfigKeys.WE_CHAT_APP_SECRET,appSecret);
+        return this;
+    }
+
+    public final Configurator withActivity(Activity activity) {
+        AB_CONFIGS.put(ConfigKeys.ACTIVITY,activity);
+        return this;
+    }
+
 
     private void checkConfiguration() {
         final boolean isReady = (boolean) AB_CONFIGS.get(ConfigKeys.CONFIG_READY);
