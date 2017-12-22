@@ -11,6 +11,7 @@ import com.whoiszxl.ab.app.Ab;
 import com.whoiszxl.ab.delegates.AbDelegate;
 import com.whoiszxl.ab.ec.launcher.LauncherDelegate;
 import com.whoiszxl.ab.ec.launcher.LauncherScrollDelegate;
+import com.whoiszxl.ab.ec.main.EcBottomDelegate;
 import com.whoiszxl.ab.ec.sign.ISignListener;
 import com.whoiszxl.ab.ec.sign.SignInDelegate;
 import com.whoiszxl.ab.ec.sign.SignUpDelegate;
@@ -51,8 +52,8 @@ public class ExampleActivity extends ProxyActivity implements
         switch (tag){
             case SIGNED:
                 Toast.makeText(this,"用户已经登录了",Toast.LENGTH_LONG).show();
-                startWithPop(new SignInDelegate());
-                start(new ExampleDelegate());
+                //startWithPop(new EcBottomDelegate());
+                start(new EcBottomDelegate());
                 break;
             case NOT_SIGNED:
                 Toast.makeText(this,"用户未登录",Toast.LENGTH_SHORT).show();
