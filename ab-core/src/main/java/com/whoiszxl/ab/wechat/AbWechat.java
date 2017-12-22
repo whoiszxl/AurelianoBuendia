@@ -14,8 +14,8 @@ import com.whoiszxl.ab.app.ConfigKeys;
 
 public class AbWechat {
 
-    static final String APP_ID = Ab.getConfiguration(ConfigKeys.WE_CHAT_APP_ID);
-    static final String APP_SECRET = Ab.getConfiguration(ConfigKeys.WE_CHAT_APP_SECRET);
+    public static final String APP_ID = Ab.getConfiguration(ConfigKeys.WE_CHAT_APP_ID);
+    public static final String APP_SECRET = Ab.getConfiguration(ConfigKeys.WE_CHAT_APP_SECRET);
     private final IWXAPI WXAPI;
 
     private static final class Holder{
